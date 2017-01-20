@@ -12,11 +12,14 @@ class Room
   end
 
   def put_guest_in_room(guest)
-    @capacity.push(guest)
+    if @capacity.count < 4
+      @capacity.push(guest)
+    else
+      "Sorry that room is full"
+    end
   end
 
   def take_guest_out_of_room(guest)
       @capacity.delete_if { |person| person.guest_name == guest.guest_name }
   end
-
 end
