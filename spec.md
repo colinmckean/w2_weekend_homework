@@ -10,6 +10,7 @@ check_guest_in()
 song()
 room_availble()
 tab/money spent
+to add a song it costs money. £3.50
 
 Song
 

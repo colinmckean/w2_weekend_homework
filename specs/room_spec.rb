@@ -2,21 +2,24 @@ require ('minitest/autorun')
 require 'minitest/rg'
 require_relative ('../Room')
 require_relative ('../Guest')
+require_relative ('../Song')
 
 class TestRoom < Minitest::Test
   def setup
     @room = Room.new
-    @guest = Guest.new("Colin")
+    @guest = Guest.new("Colin", 100)
     @room2 = Room.new
-    @guest2 = Guest.new("Mr Colin")
+    @guest2 = Guest.new("Mr Colin",50 )
     @room3 = Room.new
-    @guest3 = Guest.new("The Colin")
+    @guest3 = Guest.new("The Colin", 20)
     @room4 = Room.new
-    @guest4 = Guest.new("SirColin")
+    @guest4 = Guest.new("SirColin", 30)
     @room5 = Room.new
-    @guest5 = Guest.new("His Royal Greatness Colin")
+    @guest5 = Guest.new("His Royal Greatness Colin", 20)
     @room6 = Room.new
-    @guest6 = Guest.new("Just Colin")
+    @guest6 = Guest.new("Just Colin", 10)
+
+    @song = Song.new("The Song")
   end
 
   def test_empty_room
@@ -43,9 +46,14 @@ class TestRoom < Minitest::Test
     assert_equal(4, @room.capacity())
     assert_equal("Sorry that room is full", @room.put_guest_in_room(@guest5))
     assert_equal(4, @room.capacity())
+  end
 
+  def test_check_song_queue
+    assert_equal(0, @room.check_song_queue)
+  end
 
-
-    
+  def test_add_song_to_room
+    @room.add_song_to_room(@song)
+    assert_equal(1, @room.check_song_queue)
   end
 end
