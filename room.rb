@@ -2,14 +2,11 @@ class Room
 
   attr_reader :room_id, :room_booked
 @@room_id = 0
-  def initialize
+  def initialize(room_id)
     @guests_array = Array.new
-    #going to come back to this, may have all index = empty and update with guest name when checking in and change to empty when checking out, will need to refactor tests and functions to take in to account this change.
-    #@guests_array = Array.new(8){|i| i = "empty"}
     @songs_array = Array.new
     @cost = 10
-    @@room_id += 1
-    @room_id = @@room_id
+    @room_id = @room_id
     @room_booked == false
 
   end

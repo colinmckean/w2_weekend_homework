@@ -8,7 +8,7 @@ require_relative ('../Caraokebar')
 
 class TestRoom < Minitest::Test
   def setup
-    @rooms_array = Array.new(5) { |i| i = Room.new }
+    @rooms_array = Array.new(5) { |i| Room.new(i) }
     @caraokebar = Caraokebar.new(@rooms_array)
     # @room_1 = Room.new
     # @room_2= Room.new
