@@ -3,21 +3,21 @@ require 'minitest/rg'
 require_relative ('../Room')
 require_relative ('../Guest')
 require_relative ('../Song')
-
+require_relative ('../Tab')
 class TestRoom < Minitest::Test
   def setup
     @room = Room.new(0)
-    @guest = Guest.new("Colin")
+    @guest = Guest.new("Colin", Tab.new)
     @room2 = Room.new(1)
-    @guest2 = Guest.new("Mr Colin")
+    @guest2 = Guest.new("Mr Colin",Tab.new)
     @room3 = Room.new(2)
-    @guest3 = Guest.new("The Colin")
+    @guest3 = Guest.new("The Colin",Tab.new)
     @room4 = Room.new(3)
-    @guest4 = Guest.new("SirColin")
+    @guest4 = Guest.new("SirColin",Tab.new)
     @room5 = Room.new(4)
-    @guest5 = Guest.new("His Royal Greatness Colin")
+    @guest5 = Guest.new("His Royal Greatness Colin", Tab.new)
     @room6 = Room.new(5)
-    @guest6 = Guest.new("Just Colin")
+    @guest6 = Guest.new("Just Colin", Tab.new)
     @song = Song.new("The Song")
   end
 

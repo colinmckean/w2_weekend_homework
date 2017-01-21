@@ -21,25 +21,5 @@ class Caraokebar
   def change_to_index(choice)
    return choice-1
   end
-  # def select_room(room_to_book)
-  #   for room in @@rooms_array
-  #     if room.room_id == room_to_book
-  #       if room.room_booked
-  #         return "Please select a room that's currently available."
-  #     else
-  #       # room.room_booked = true
-  #       return room.book_room(self)
-  #     end
-  #       #return "Please select a room that's currently available."
-  #     end
-  #   end
-    #@@rooms_array.find
-    # return "Room Booked
-    # @@rooms_array[0] == room_to_book.room_id
-    # @@rooms_array[0].room_id
-
-    # @@rooms_array[0].room_id
-
-    # @@rooms_array
-  
+    
 end
