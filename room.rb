@@ -1,6 +1,6 @@
 class Room
 
-  attr_reader :room_id, :room_booked
+  attr_reader :room_id, :room_booked, :guests_array, :songs_array
   def initialize(room_id)
     @guests_array = Array.new
     @songs_array = Array.new
@@ -8,15 +8,6 @@ class Room
     @room_id = room_id
     @room_booked == false
 
-  end
-
-  def guests_array
-    return @guests_array.length
-  end
-
-  def room_id
-    return @room_id
-    
   end
 
   def put_guest_in_room(guest)
@@ -35,9 +26,6 @@ class Room
     @songs_array << song
   end
 
-  def check_song_queue
-    @songs_array.length
-  end
   def book_room(room_to_book)
     if @room_booked == true
       return false
@@ -45,5 +33,4 @@ class Room
     @room_booked = true
   end
 end
-
 end
