@@ -6,7 +6,7 @@ class Room
     @guests_array = Array.new
     #going to come back to this, may have all index = empty and update with guest name when checking in and change to empty when checking out, will need to refactor tests and functions to take in to account this change.
     #@guests_array = Array.new(8){|i| i = "empty"}
-    @songs = Array.new
+    @songs_array = Array.new
     @cost = 10
     @@room_id += 1
     @room_id = @@room_id
@@ -36,11 +36,11 @@ class Room
   end
 
   def add_song_to_room(song)
-    @songs << song
+    @songs_array << song
   end
 
   def check_song_queue
-    @songs.length
+    @songs_array.length
   end
   def book_room(room_to_book)
     if @room_booked == true
