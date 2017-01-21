@@ -7,7 +7,6 @@ class Room
     @cost = 10
     @room_id = room_id
     @room_booked == false
-
   end
 
   def put_guest_in_room(guest)
@@ -19,7 +18,7 @@ class Room
   end
 
   def take_guest_out_of_room(guest)
-      @guests_array.delete_if { |person| person.guest_name == guest.guest_name }
+    @guests_array.delete_if { |person| person.guest_name == guest.guest_name }
   end
 
   def add_song_to_room(song)
@@ -30,7 +29,8 @@ class Room
     if @room_booked == true
       return false
     else
-    @room_booked = true
+      @room_booked = true
+    end
   end
-end
+  
 end
