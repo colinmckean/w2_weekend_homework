@@ -1,12 +1,11 @@
 class Room
 
   attr_reader :room_id, :room_booked
-@@room_id = 0
   def initialize(room_id)
     @guests_array = Array.new
     @songs_array = Array.new
     @cost = 10
-    @room_id = @room_id
+    @room_id = room_id
     @room_booked == false
 
   end

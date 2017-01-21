@@ -16,7 +16,6 @@ class Caraokebar
 
 
   def find_rooms(num)
-    num = change_to_index(num)
     @rooms_array.find_index{|i| i.room_id == num}
   end
 
