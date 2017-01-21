@@ -23,29 +23,29 @@ class TestRoom < Minitest::Test
   end
 
   def test_empty_room
-    assert_equal(0, @room.capacity())
+    assert_equal(0, @room.guests_array())
   end
 
   def test_put_guest_in_room
     @room.put_guest_in_room(@guest)
     @room.put_guest_in_room(@guest2)
-    assert_equal(2, @room.capacity())
+    assert_equal(2, @room.guests_array())
   end
 
   def test_take_guest_out_of_room
     @room.put_guest_in_room(@guest)
     @room.put_guest_in_room(@guest2)
     @room.take_guest_out_of_room(@guest)
-    assert_equal(1, @room.capacity())
+    assert_equal(1, @room.guests_array())
   end
   def test_what_happens_with_more_than_four_guests
     @room.put_guest_in_room(@guest)
     @room.put_guest_in_room(@guest1)
     @room.put_guest_in_room(@guest2)
     @room.put_guest_in_room(@guest3)
-    assert_equal(4, @room.capacity())
+    assert_equal(4, @room.guests_array())
     assert_equal("Sorry that room is full", @room.put_guest_in_room(@guest5))
-    assert_equal(4, @room.capacity())
+    assert_equal(4, @room.guests_array())
   end
 
   def test_check_song_queue
