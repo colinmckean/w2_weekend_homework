@@ -43,7 +43,11 @@ class Room
     @songs.length
   end
   def book_room(room_to_book)
+    if @room_booked == true
+      return false
+    else
     @room_booked = true
   end
+end
 
 end
