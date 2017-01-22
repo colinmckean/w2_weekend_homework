@@ -7,4 +7,11 @@ class Guest
     @guest_tab = tab
     @guest_credit_limit = 100
   end
+
+  def charge_to_tab(amount)
+    unless guest_tab.tab_amount + amount > @guest_credit_limit
+    @guest_tab.put_on_tab(amount)
+    end
+    return guest_tab.tab_amount
+  end
 end

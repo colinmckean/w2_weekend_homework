@@ -11,7 +11,7 @@ class TestTab < Minitest::Test
     assert_equal(0, @customer_tab.tab_amount)
   end
 
-  def test_put_on_tab
+  def test_tab_adding_and_taking_payment
     assert_equal(10, @customer_tab.put_on_tab(10))
     assert_equal(4, @customer_tab.take_payment(6))
   end

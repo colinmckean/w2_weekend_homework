@@ -27,6 +27,7 @@ class TestRoom < Minitest::Test
 
   def test_put_guest_in_room
     @room.put_guest_in_room(@guest)
+    assert_equal(10, @guest.guest_tab.tab_amount)
     @room.put_guest_in_room(@guest2)
     assert_equal(2, @room.guests_array.length())
   end
@@ -34,14 +35,15 @@ class TestRoom < Minitest::Test
   def test_take_guest_out_of_room
     @room.put_guest_in_room(@guest)
     @room.put_guest_in_room(@guest2)
-    @room.take_guest_out_of_room(@guest)
-    assert_equal(1, @room.guests_array.length)
+    @room.put_guest_in_room(@guest3)
+    @room.take_guest_out_of_room(@guest.guest_name)
+    assert_equal(2, @room.guests_array.length)
   end
   def test_what_happens_with_more_than_four_guests
     @room.put_guest_in_room(@guest)
-    @room.put_guest_in_room(@guest1)
     @room.put_guest_in_room(@guest2)
     @room.put_guest_in_room(@guest3)
+    @room.put_guest_in_room(@guest4)
     assert_equal(4, @room.guests_array.length)
     assert_equal("Sorry that room is full", @room.put_guest_in_room(@guest5))
     assert_equal(4, @room.guests_array.length)
@@ -52,7 +54,24 @@ class TestRoom < Minitest::Test
   end
 
   def test_add_song_to_room
-    @room.add_song_to_room(@song)
+    @room.add_song_to_room(@guest,@song)
     assert_equal(1, @room.songs_array.length)
+  end
+
+  def test_charge_for_room
+    assert_equal(10, @room.charge_guest_for_room(@guest,10))
+    assert_equal(10, @guest.guest_tab.tab_amount)
+    assert_equal(10, @room.charge_guest_for_room(@guest,100))
+    @room.add_song_to_room(@guest,@song)
+    @room.add_song_to_room(@guest,@song)
+    assert_equal(30, @guest.guest_tab.tab_amount)
+  end
+
+  def test_find_index_of_guest_in_room
+        @room.put_guest_in_room(@guest)
+        @room.put_guest_in_room(@guest2)
+        @room.put_guest_in_room(@guest3)
+        @room.put_guest_in_room(@guest4)
+        assert_equal(2, @room.find_index_of_someone_in_room("The Colin"))
   end
 end
