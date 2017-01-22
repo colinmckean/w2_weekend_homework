@@ -8,7 +8,7 @@ require_relative ('../Caraokebar')
 
 class TestSong < Minitest::Test
   def setup
-    @song = Song.new("A Song")
+    @song = Song.new("CAN'T STOP THE FEELING", "JUSTIN TIMBERLAKE")
   end
   def test_song_cost
     assert_equal(10, @song.song_cost)

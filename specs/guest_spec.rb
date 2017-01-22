@@ -11,15 +11,7 @@ class TestGuest < Minitest::Test
     @guest = Guest.new("Colin", Tab.new)
     @room2 = Room.new(1)
     @guest2 = Guest.new("Mr Colin", Tab.new)
-    # @room3 = Room.new(2)
-    # @guest3 = Guest.new("The Colin")
-    # @room4 = Room.new(3)
-    # @guest4 = Guest.new("SirColin")
-    # @room5 = Room.new(4)
-    # @guest5 = Guest.new("His Royal Greatness Colin")
-    # @room6 = Room.new(5)
-    # @guest6 = Guest.new("Just Colin")
-    # @song = Song.new("The Song")
+
   end
   def test_tab_amount
     assert_equal(0, @guest.guest_tab.tab_amount)
