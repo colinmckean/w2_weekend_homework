@@ -4,7 +4,7 @@ class Room
   def initialize(room_id)
     @guests_array = Array.new
     @songs_array = Array.new
-    @cost = 10
+    @cost = 50
     @room_id = room_id
     @room_booked == false
   end
