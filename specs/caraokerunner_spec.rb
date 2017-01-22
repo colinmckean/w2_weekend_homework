@@ -50,13 +50,10 @@ class Menu
   end
 
   def room_selection_menu
+    room_id = 0
     puts %x{clear}
     puts "Please select a room to add a guest to"
-    puts "1. Book guest in to room 1"
-    puts "2. Book guest in to room 2"
-    puts "3. Book guest in to room 3"
-    puts "4. Book guest in to room 4"
-    puts "5. Book guest in to room 5"
+    @rooms.each {|room| puts "#{room_id += 1}. Book guest in to room #{room_id}"}
     puts "9. Main menu"
     input = gets.chomp.to_i
     if (input >= 1 && input <= 5)
@@ -69,14 +66,11 @@ class Menu
   end
 
   def add_songs_menu(song)
+    room_id = 0
     puts %x{clear}
     puts "ADD SONGS MENU"
     puts "Select a room to add songs to"
-    puts "1. Add song to room 1"
-    puts "2. Add song to room 2"
-    puts "3. Add song to room 3"
-    puts "4. Add song to room 4"
-    puts "5. Add song to room 5"
+    @rooms.each {|room| puts "#{room_id += 1}. Add song to room #{room_id}"}
     puts "9. Main Menu"
     input = gets.chomp.to_i
     if input >= 1 && input <= 5
@@ -99,7 +93,7 @@ class Menu
     puts %x{clear}
     puts "Welcome to customer Management"
     puts "Enter Customer name"
-    customer_name = gets.chomp
+    customer_name = validate_name()
     puts "Here are you're options for #{customer_name}"
     puts "1. View #{customer_name}'s' Tab and take payments"
     puts "2. Checkout"
@@ -111,7 +105,7 @@ class Menu
       room_ids = 0
       for room in @rooms
         unless room.find_index_of_someone_in_room(customer_name) == nil
-        index_of_guest = room.find_index_of_someone_in_room(customer_name)
+          index_of_guest = room.find_index_of_someone_in_room(customer_name)
           room_ids = room.room_id
         end
       end
@@ -132,52 +126,52 @@ class Menu
     menu_selection()
   end
 
-#Can correctly select songs.
-def song_selection
-  puts %x{clear}
-  puts "Select Song"
-  song_id = 0
-  @song_list.each {|song| puts "#{song_id += 1}, #{song.song_title} by - £#{song.song_cost}"}
+  #Can correctly select songs.
+  def song_selection
+    puts %x{clear}
+    puts "Select Song"
+    song_id = 0
+    @song_list.each {|song| puts "#{song_id += 1}, #{song.song_title} by - £#{song.song_cost}"}
 
-  input = gets.chomp.to_i
-  if input <= @song_list.length && input >= 1
-    add_songs_menu(@song_list[input-1])
-  else
-    song_selection
-  end
-  puts "***"
-end
-
-#Can now check customers out of rooms.
-def check_out(customer_name)
-  room_ids = 0
-  for room in @rooms
-    unless room.find_index_of_someone_in_room(customer_name) == nil
-      index_of_guest = room.find_index_of_someone_in_room(customer_name)
-      room_ids = room.room_id 
+    input = gets.chomp.to_i
+    if input <= @song_list.length && input >= 1
+      add_songs_menu(@song_list[input-1]) && input != nil
+      return input-1
+    else
+      song_selection
     end
   end
-  room_that_has_guest = @rooms[room_ids]
 
-  unless room_that_has_guest.guests_array[index_of_guest].guest_tab.tab_amount > 0
-    @rooms[room_ids].take_guest_out_of_room(customer_name)
-    puts "#{customer_name} has been checked-out"
-    gets.chomp
-  else
-    puts"DANGER! Please ensure #{customer_name} has paid his tab"
-    gets.chomp
+  #Can now check customers out of rooms.
+  def check_out(customer_name)
+    room_ids = 0
+    for room in @rooms
+      unless room.find_index_of_someone_in_room(customer_name) == nil
+        index_of_guest = room.find_index_of_someone_in_room(customer_name)
+        room_ids = room.room_id 
+      end
+    end
+    room_that_has_guest = @rooms[room_ids]
+
+    unless room_that_has_guest.guests_array[index_of_guest].guest_tab.tab_amount > 0
+      @rooms[room_ids].take_guest_out_of_room(customer_name)
+      puts "#{customer_name} has been checked-out"
+      gets.chomp
+    else
+      puts"DANGER! Please ensure #{customer_name} has paid his tab"
+      gets.chomp
+    end
   end
-end
-#Correctly checks guests in to a room
-def check_guest_in_to_room(input)
-  puts "Please enter name of Guest"
-  customer_name = gets.chomp
-  guest = Guest.new(customer_name, Tab.new)
-  puts @rooms[input-1].put_guest_in_room(guest)
-  gets.chomp
-  room_selection_menu()
-end
-  #can correctly view guests in rooms.
+  #Correctly checks guests in to a room
+  def check_guest_in_to_room(input)
+    puts "Please enter name of Guest"
+    customer_name = gets.chomp
+    guest = Guest.new(customer_name, Tab.new)
+    puts @rooms[input-1].put_guest_in_room(guest)
+    gets.chomp
+    room_selection_menu()
+  end
+
   def view_guest_menu
     puts %x{clear}
     puts "Please select a room to view add a guest to"
@@ -200,15 +194,57 @@ end
 
   def add_song_to_room_menu(input)
     puts "Enter name of customer to bill song request to."
-    guest_name_to_find = gets.chomp
+    guest_name_to_find = validate_name()
     index_of_guest = @rooms[input-1].find_index_of_someone_in_room(guest_name_to_find)
+    #
     song = Song.new("A song")
+    #
     guest = @rooms[input-1].guests_array[index_of_guest]
     @rooms[input-1].add_song_to_room(guest,song)
     puts "song added and billed to #{guest.guest_name}, their tab is now £#{guest.guest_tab.tab_amount}"
     gets.chomp
-    
+
   end
+
+  def validate_name()
+    customer_name_to_return = gets.chomp
+    room_that_has_guest = nil
+    for room in @rooms
+      if room.find_index_of_someone_in_room(customer_name_to_return) != nil
+        room_ids = room.room_id
+        room_that_has_guest = @rooms[room_ids]
+        index_of_guest = @rooms[room_ids].find_index_of_someone_in_room(customer_name_to_return)
+        puts room_ids
+        puts room_that_has_guest
+        gets.chomp
+        customer_name_to_return = @rooms[room_ids].guests_array[0].guest_name
+        break
+      else
+        validate_name()
+      end
+    end
+ # if room_that_has_guest.guests_array[index_of_guest].guest_name == customer_name_to_return
+ #  puts "PUTS HI!!!"
+ #  gets.chomp
+ # end
+ gets.chomp
+ return customer_name_to_return
+  #     break
+  #     return customer_name_to_return
+  #     break
+
+  #     index_of_guest = @rooms[room_that_has_guest].find_index_of_someone_in_room(guest_name_to_find)
+  #   end
+  # end
+  # room_that_has_guest = @rooms[room_ids]
+
+  # if room_that_has_guest.guests_array[index_of_guest].guest_name != nil
+  #   return customer_name
+  # else
+  #   validate_name()
+  # end
+  # validate_name()
+end
   @menu = Menu.new
   @menu.menu_selection
 end
